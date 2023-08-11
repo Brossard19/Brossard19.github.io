@@ -1,10 +1,24 @@
 /*=============== SHOW MENU ===============*/
+const navMenu = document.getElementById('nav-menu'),
+    navToggle = document.getElementById('nav-toggle'),
+    navClose = document.getElementById('nav-close');
+
 
 /*===== Menu Show =====*/
 /* Validate if constant exists */
+if(navToggle) {
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.add('show-menu');
+    });
+}
 
 /*===== Hide Show =====*/
 /* Validate if constant exists */
+if(navClose) {
+    navClose.addEventListener('click', () => {
+        navMenu.classList.remove('show-menu');
+    });
+}
 
 /*=============== IMAGE GALLERY ===============*/
 function imgGallery() {
@@ -28,16 +42,24 @@ var swiperCategories = new Swiper(".categories__container", {
     },
 
     breakpoints: {
-        640: {
-            slidesPerView: 3,
-            spaceBetween: 20,
+        350: {
+            slidesPerView: 2,
+            spaceBetween: 24,
         },
         768: {
-            slidesPerView: 6,
-            spaceBetween: 22,
+            slidesPerView: 3,
+            spaceBetween: 24,
+        },
+        992: {
+            slidesPerView: 4,
+            spaceBetween: 24,
+        },
+        1200: {
+            slidesPerView: 5,
+            spaceBetween: 24,
         },
         1400: {
-            slidesPerView: 7,
+            slidesPerView: 6,
             spaceBetween: 24,
         },
     },
@@ -53,13 +75,13 @@ var swiperProducts = new Swiper(".new__container", {
     },
 
     breakpoints: {
-        640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-        },
         768: {
-            slidesPerView: 4,
-            spaceBetween: 40,
+            slidesPerView: 2,
+            spaceBetween: 24,
+        },
+        992: {
+            slidesPerView: 3,
+            spaceBetween: 24,
         },
         1400: {
             slidesPerView: 4,
@@ -93,7 +115,7 @@ const tabs = document.querySelectorAll('[data-target]'),
 
 /*=============== PAGINATION ===============*/
 let thisPageDashboard = 1;
-let limitDashboard = 4;
+let limitDashboard = 8;
 let listDashboard = document.querySelectorAll('#dashboard .product__item');
 
 function loadItemDashboard(){
@@ -146,7 +168,7 @@ function changePageDashboard(i){
 }
 
 let thisPageBags = 1;
-let limitBags = 4;
+let limitBags = 8;
 let listBags = document.querySelectorAll('#update-profile .product__item');
 
 function loadItemBags(){
@@ -200,7 +222,7 @@ function changePageBags(i){
 
 
 let thisPageOrders = 1;
-let limitOrders = 4;
+let limitOrders = 8;
 let listOrders = document.querySelectorAll('#orders .product__item');
 
 function loadItemOrders(){
@@ -252,4 +274,108 @@ function changePageOrders(i){
     loadItemOrders();
 }
 
+let thisPageAddress = 1;
+let limitAddress = 8;
+let listAddress = document.querySelectorAll('#address .product__item');
 
+function loadItemAddress(){
+    let beginGetAddress = limitAddress * (thisPageAddress - 1);
+    let endGetAddress = limitAddress * thisPageAddress - 1;
+    listAddress.forEach((product__item, keyAddress)=>{
+        if(keyAddress >= beginGetAddress && keyAddress <= endGetAddress){
+            product__item.style.display = 'block';
+        }else{
+            product__item.style.display = 'none';
+        }
+    })
+    paginationAddress();
+}
+loadItemAddress();
+function paginationAddress(){
+    let countAddress = Math.ceil(listAddress.length / limitAddress);
+    document.querySelector('#address .pagination').innerHTML = '';
+
+    if(thisPageAddress != 1){
+        let prevAddress = document.createElement('li');
+        prevAddress.className = 'pagination__link',
+        prevAddress.innerText = 'PREV';
+        prevAddress.setAttribute('onclick', "changePageAddress(" + (thisPageAddress - 1) + ")");
+        document.querySelector('#address .pagination').appendChild(prevAddress);
+    }
+
+    for(i = 1; i <= countAddress; i++){
+        let newPageAddress = document.createElement('li');
+        newPageAddress.className = 'pagination__link',
+        newPageAddress.innerText = i;
+        if(i == thisPageAddress){
+            newPageAddress.classList.add('active');
+        }
+        newPageAddress.setAttribute('onclick', "changePageAddress(" + i + ")");
+        document.querySelector('#address .pagination').appendChild(newPageAddress);
+    }
+
+    if(thisPageAddress != countAddress){
+        let nextAddress = document.createElement('li');
+        nextAddress.className = 'pagination__link';
+        nextAddress.innerText = 'NEXT';
+        nextAddress.setAttribute('onclick', "changePageAddress(" + (thisPageAddress + 1) + ")");
+        document.querySelector('#address .pagination').appendChild(nextAddress);
+    }
+}
+function changePageAddress(i){
+    thisPageAddress = i;
+    loadItemAddress();
+}
+
+let thisPagePassword = 1;
+let limitPassword = 8;
+let listPassword = document.querySelectorAll('#change-password .product__item');
+
+function loadItemPassword(){
+    let beginGetPassword = limitPassword * (thisPagePassword - 1);
+    let endGetPassword = limitPassword * thisPagePassword - 1;
+    listPassword.forEach((product__item, keyPassword)=>{
+        if(keyPassword >= beginGetPassword && keyPassword <= endGetPassword){
+            product__item.style.display = 'block';
+        }else{
+            product__item.style.display = 'none';
+        }
+    })
+    paginationPassword();
+}
+loadItemPassword();
+function paginationPassword(){
+    let countPassword = Math.ceil(listPassword.length / limitPassword);
+    document.querySelector('#change-password .pagination').innerHTML = '';
+
+    if(thisPagePassword != 1){
+        let prevPassword = document.createElement('li');
+        prevPassword.className = 'pagination__link',
+        prevPassword.innerText = 'PREV';
+        prevPassword.setAttribute('onclick', "changePagePassword(" + (thisPagePassword - 1) + ")");
+        document.querySelector('#change-password .pagination').appendChild(prevPassword);
+    }
+
+    for(i = 1; i <= countPassword; i++){
+        let newPagePassword = document.createElement('li');
+        newPagePassword.className = 'pagination__link',
+        newPagePassword.innerText = i;
+        if(i == thisPagePassword){
+            newPagePassword.classList.add('active');
+        }
+        newPagePassword.setAttribute('onclick', "changePagePassword(" + i + ")");
+        document.querySelector('#change-password .pagination').appendChild(newPagePassword);
+    }
+
+    if(thisPagePassword != countPassword){
+        let nextPassword = document.createElement('li');
+        nextPassword.className = 'pagination__link';
+        nextPassword.innerText = 'NEXT';
+        nextPassword.setAttribute('onclick', "changePagePassword(" + (thisPagePassword + 1) + ")");
+        document.querySelector('#change-password .pagination').appendChild(nextPassword);
+    }
+}
+function changePagePassword(i){
+    thisPagePassword = i;
+    loadItemPassword();
+}
